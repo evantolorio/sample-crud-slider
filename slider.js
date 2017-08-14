@@ -1,23 +1,17 @@
 var mongoose = require('mongoose');
 
 module.exports = new mongoose.Schema({
-    background_image: ,
+    backgroundImage: String,
     caption: {
-        title:{
-
+        title: String,
+        description: String,
+        actionButton: {
+            shouldUse: Boolean,
+            text: String,
+            colorType: String,
+            sref: String
         },
-        description:{
-
-        },
-        action_button:{
-            text: {},
-            color: {}
-        },
-        background: {
-            color: {}
-            opacity: {}
-        }
-
+        rgbaColor: String
     },
-    order:
+    order: Number
 });
