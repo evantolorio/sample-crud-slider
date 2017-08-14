@@ -8,12 +8,10 @@ module.exports = new mongoose.Schema({
         actionButton: {
             shouldUse: Boolean,
             text: String,
-            color: String
+            colorType: String,
+            sref: String
         },
-        background: {
-            color: String,
-            opacity: String
-        }
+        rgbaColor: String
     },
     order: Number
 });
