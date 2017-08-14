@@ -8,32 +8,6 @@ mongoose.connect('mongodb://localhost:27017/test');
 // Parameters: model name, schema, collection name
 var Slider = mongoose.model('Slider', sliderSchema, 'sliders');
 
-// var slider = new Slider({
-//     backgroundImage: '/images/community.jpg',
-//     caption: {
-//         title: 'Strong Community',
-//         description: 'Build an interactive and solid community driven by purpose, and united in achieving common goals.',
-//         actionButton: {
-//             shouldUse: false,
-//             text: '',
-//             colorType: '',
-//             sref: ''
-//         },
-//         rgbaColor: 'rgba(0, 39, 150, 0.5)'
-//     },
-//     order: 1
-// });
-//
-// slider.save(function(error){
-//     if (error) {
-//         console.log(error);
-//         process.exit(1);
-//     }
-//     else {
-//         console.log('sucess!');
-//     }
-// });
-
 var app = express();
 
 // Serve static files
@@ -63,12 +37,34 @@ app.route('/api/sliders')
         });
     })
     .post(function(req, res){
+        // Create new slider
+        var slider = new Slider(req.body);
+        slider.save(function(error){
+            if(error) console.log(error);
 
+            res.send('Slider saved');
+        });
     })
     .put(function(req, res){
+        // Update a slider
+        var id = req.params.id;
 
+		Slider.findByIdAndUpdate(id, req.body, function(error){
+			if(error) console.log(error);
+
+			res.send("Slider updated");
+		});
     })
     .delete(function(req, res){
+        // Delete a slider
+        var id = req.params.id;
+
+		Slider.findByIdAndRemove(id, function(error, result){
+			if(error) return (error);
+			else if (result === null) return res.status(404).send('Slider not found!');
+
+			res.send("Slider deleted.");
+		});
 
     });
 
